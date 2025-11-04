@@ -9,14 +9,34 @@
 > i. Look inside src/main/java/dungeonmania/entities/enemies. Where can you notice an instance of repeated code? Note down the particular offending lines/methods/fields.
 
 [Answer]
+    The move methods are quite large, especially in Mercenary and ZombieToast which also use switch statements which is a common code smell. Moreover there is a lot of shared code in the move methods in both Mercenary and ZombieToast - the case "random" in zombietoast is the same as the case "invisible" for mercenary, and the case "runAway" in zombietoast is the same as the case "invincible" for mercenary. 
+    onMovedAway and onOverlap seems to be redunandant in zombietoastspawner since they're just returning.
+
+
 
 > ii. What Design Pattern could be used to improve the quality of the code and avoid repetition? Justify your choice by relating the scenario to the key characteristics of your chosen Design Pattern.
 
 [Answer]
+    Implementing the strategy pattern would improve the quality of the code and avoid repetition. Strategy patterns encourages separation concerns, which is useful in this context since each enemy class can be focused on ochestration of movement rather than catering for each type of scenario that can change movement for an enemy (e.g., if the player is under the influence of a potion, if theres something blocking the movement etc). It also enables open-closed principles, so new methods than can influence movement can be added without changing the existing code in each enemy class. 
+
 
 > iii. Using your chosen Design Pattern, refactor the code to remove the repetition.
 
 [Briefly explain what you did]
+
+    I created a MovementStrategy interface with a move(Game game, Enemy enemy) method. Each movement type (RunAwayMovement, RandomMovement, HostileMovement etc) is its own class implementing this interface. Each enemy then holds a reference to this strategy.
+    I created the following movement types:
+        - RandomMovement
+        - RunAwayMovement
+        - HostileMovement
+        - AlliedMovement
+
+    I decided that the move method for spiders did not need its own strategy pattern(s) because its movement was fixed and not influenced by the player. Therefore, since only Mercenarie and zombietoasts' movement is influenced by the player, they are the only enemies that require strategy patterns for their movements. 
+
+    I then refactored Mercenary.java and ZombieToast.java to align with my strategy pattern. 
+
+
+
 
 ### b) Inheritance Design (6 marks)
 
