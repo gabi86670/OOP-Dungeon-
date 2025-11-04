@@ -4,7 +4,7 @@
 
 ### a) From DRY to Design Patterns (6 marks)
 
-[Links to your merge requests](/put/links/here)
+[Links to your merge requests](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T3/students/z5592426/assignment-ii/-/merge_requests/1)
 
 > i. Look inside src/main/java/dungeonmania/entities/enemies. Where can you notice an instance of repeated code? Note down the particular offending lines/methods/fields.
 
@@ -35,9 +35,6 @@
 
     I then refactored Mercenary.java and ZombieToast.java to align with my strategy pattern. 
 
-
-
-
 ### b) Inheritance Design (6 marks)
 
 [Links to your merge requests](/put/links/here)
@@ -45,10 +42,14 @@
 > i. List one design principle that is violated by collectable objects based on the description above. Briefly justify your answer.
 
 [Answer]
+    SRP (single responsibility principle) is violated as instead on focusing on one functionality/responsibility, collectable items like wood and treasure have responsibilities/functionalities for unrelated methods that do things like track durabality and apply buffs. This makes the classes harder to maintain.
+
 
 > ii. Refactor the inheritance structure of the code, and in the process remove the design principle violation you identified.
 
 [Briefly explain what you did]
+    I implemented the refactoring method 'Extract Class' where i made classes Buff.java and Durability.java. Then in InventoryItem.java, the abstract methods for durability and buff become public methods that returned the appropriate results depending if a collectable item has durability or buff-ness or not. If a collectable did have a durability/buff effect, then it was found and returned using the Buff.java and Durability.java classes. Then I could delete instances of these abstract methods from collectables that didnt care about durability and buff effects (i.e., in Wood.java, Key.java, Arrow.java, Bomb.java and Treasure.java). 
+    In collectable items that did have durability and buff effects, the durability and buff of that item was set in its constructor where it made new instances of objects of Buff.java and Durability.java. The changes made to these fields were now no longer a concern of these collectables, but rather of their according classes. 
 
 ### c) Open-Closed Goals (6 marks)
 

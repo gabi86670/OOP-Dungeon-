@@ -15,13 +15,12 @@ public class Sword extends InventoryItem implements Useable {
     public static final double DEFAULT_DEFENCE = 0;
     public static final double DEFAULT_DEFENCE_SCALE_FACTOR = 1;
 
-    private int durability;
-    private double attack;
+    // private Durability durability;
 
     public Sword(Position position, double attack, int durability) {
         super(position);
-        this.attack = attack;
-        this.durability = durability;
+        setDurability(new Durability(durability));
+        setBuff(new Buff(new BattleStatistics(0, attack, 0, 1, 1)));
     }
 
     @Override
@@ -40,19 +39,11 @@ public class Sword extends InventoryItem implements Useable {
 
     @Override
     public void use(Game game) {
-        durability--;
-        if (durability <= 0) {
+        Durability durability = getDurabilityObject();
+        durability.useCollectable();
+        if (durability.isNegativeDurability()) {
             game.getPlayer().remove(this);
         }
     }
 
-    @Override
-    public BattleStatistics applyBuff(BattleStatistics origin) {
-        return BattleStatistics.applyBuff(origin, new BattleStatistics(0, attack, 0, 1, 1));
-    }
-
-    @Override
-    public int getDurability() {
-        return durability;
-    }
 }

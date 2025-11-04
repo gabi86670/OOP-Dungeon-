@@ -1,6 +1,5 @@
 package dungeonmania.entities.collectables;
 
-import dungeonmania.battles.BattleStatistics;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.Player;
 import dungeonmania.entities.inventory.InventoryItem;
@@ -30,15 +29,4 @@ public class Key extends InventoryItem {
     public int getnumber() {
         return number;
     }
-
-    @Override
-    public BattleStatistics applyBuff(BattleStatistics origin) {
-        return BattleStatistics.applyBuff(origin, new BattleStatistics(0, 0, 0, 1, 1, false, false));
-    }
-
-    @Override
-    public int getDurability() {
-        return Integer.MAX_VALUE;
-    }
-
 }
