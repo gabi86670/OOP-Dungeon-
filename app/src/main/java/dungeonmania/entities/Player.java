@@ -28,7 +28,7 @@ import dungeonmania.util.Position;
  * The player object stores critical information about the player such as their inventory, potion queue and battle
  * statistics.
  */
-public class Player extends Entity implements Battleable {
+public class Player extends Entity implements Battleable, Overlap {
     public static final double DEFAULT_ATTACK = 5.0;
     public static final double DEFAULT_HEALTH = 5.0;
     /** Stats used when the player goes into battle */
@@ -182,16 +182,6 @@ public class Player extends Entity implements Battleable {
             return BattleStatistics.applyBuff(origin, new BattleStatistics(0, 0, 0, 1, 1, false, false));
         }
         return origin;
-    }
-
-    @Override
-    public void onMovedAway(GameMap map, Entity entity) {
-        return;
-    }
-
-    @Override
-    public void onDestroy(GameMap gameMap) {
-        return;
     }
 
     public void registerPotionListener(PotionListener e) {
