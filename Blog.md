@@ -53,7 +53,7 @@
 
 ### c) Open-Closed Goals (6 marks)
 
-[Links to your merge requests](/put/links/here)
+[Links to your merge requests](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T3/students/z5592426/assignment-ii/-/merge_requests/3)
 
 > i. Do you think the design is of good quality here? Do you think it complies with the open-closed principle? Do you think the design should be changed?
 
@@ -72,6 +72,12 @@
 [Merge Request 1](/put/links/here)
 
 [Briefly explain what you did]
+    In Entity, the abstract methods onOverlap, onMovedAway and onDestroy, are forced to be implemented in all of its subclasses. Howwever, in classes such as Exit, exits cannot be destroyed so such methods can be redunant in certain cases in some of its subclasses. 
+
+    This is a violation of ISP??? EVEN THO ENTITY ISNT AN INTERFACE???
+
+    To correct this, i made the abstract methods onOverlap, onMovedAway and onDestroy each their own interface. I didnt group them in a single interface (like entityInteractions) because some entities dont use all 3 methods. E.g., boulders can overlap with things but cant be destroyed. Then i went through all of its subclasses and deleted instances of the methods if they weren't being used. I then edited the GameMap and added checks for places where it called the methods where i added small instanceof checks before calling them.
+
 
 [Merge Request 2](/put/links/here)
 

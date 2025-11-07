@@ -7,7 +7,7 @@ import dungeonmania.entities.enemies.Mercenary;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
-public class Portal extends Entity {
+public class Portal extends Entity implements Overlap {
     /** Color of this portal */
     private ColorCodedType color;
     /** Reference to the paired portal */
@@ -69,15 +69,5 @@ public class Portal extends Entity {
         if (portal != null) {
             portal.bind(this);
         }
-    }
-
-    @Override
-    public void onMovedAway(GameMap map, Entity entity) {
-        return;
-    }
-
-    @Override
-    public void onDestroy(GameMap gameMap) {
-        return;
     }
 }
