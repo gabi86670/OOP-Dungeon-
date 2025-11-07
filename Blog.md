@@ -37,7 +37,7 @@
 
 ### b) Inheritance Design (6 marks)
 
-[Links to your merge requests](/put/links/here)
+[Links to your merge requests](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T3/students/z5592426/assignment-ii/-/merge_requests/2)
 
 > i. List one design principle that is violated by collectable objects based on the description above. Briefly justify your answer.
 
@@ -58,10 +58,14 @@
 > i. Do you think the design is of good quality here? Do you think it complies with the open-closed principle? Do you think the design should be changed?
 
 [Answer]
+    The Open/Closed principle (OCP) states that s/ware entities should be open for extension but closed for modification. The design of Goal.java and GoalFactory.java is not good quality because it does not comply with OCP. This is because if the requirements of a certain goal type changed then you would need to modify the switch statement or if you were to add a new goal type youd have to add a new case to all the switch statements in both files, hence modifying both classes, directly going against OCP. So yes the design should be changed.    
+
 
 > ii. If you think the design is sufficient as it is, justify your decision. If you think the answer is no, pick a suitable Design Pattern that would improve the quality of the code and refactor the code accordingly.
 
 [Briefly explain what you did]
+    The design pattern I chose was a composite pattern because simple goals can be represented as leaves and composites can be the connectors (i.e., AND and OR) since they conjoin goals. This design is also good since each compound goal can contain exactly 2 subgoals so then it ends up looking like a tree. 
+    Refactoring just saw me make files for all the types of goals and separating theem into their according files, mainly copying the logic that was already in Goal.java for each type of goal. I changed Goal.java to an interface with the 2 methods achieved and toString which all the goal types implemented. GoalFactory.java then mainly stayed the same - i just changed each case to call their respective file instead of creating a new general goal. 
 
 ### d) Open Refactoring (12 marks)
 
