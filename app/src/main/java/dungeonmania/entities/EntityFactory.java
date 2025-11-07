@@ -1,8 +1,6 @@
 package dungeonmania.entities;
 
 import dungeonmania.Game;
-import dungeonmania.entities.buildables.Bow;
-import dungeonmania.entities.buildables.Shield;
 import dungeonmania.entities.collectables.*;
 import dungeonmania.entities.enemies.*;
 import dungeonmania.map.GameMap;
@@ -107,17 +105,6 @@ public class EntityFactory {
         int mercenaryBribeRadius = config.optInt("bribe_radius", Mercenary.DEFAULT_BRIBE_RADIUS);
         return new Mercenary(pos, mercenaryHealth, mercenaryAttack, mercenaryBribeAmount, mercenaryBribeRadius,
                 allyAttack, allyDefence);
-    }
-
-    public Bow buildBow() {
-        int bowDurability = config.optInt("bow_durability");
-        return new Bow(bowDurability);
-    }
-
-    public Shield buildShield() {
-        int shieldDurability = config.optInt("shield_durability");
-        double shieldDefence = config.optInt("shield_defence");
-        return new Shield(shieldDurability, shieldDefence);
     }
 
     private Entity constructEntity(JSONObject jsonEntity, JSONObject config) {

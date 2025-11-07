@@ -7,6 +7,9 @@ import org.json.JSONObject;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityFactory;
 import dungeonmania.entities.Player;
+import dungeonmania.entities.inventory.BowFactory;
+import dungeonmania.entities.inventory.Recipe;
+import dungeonmania.entities.inventory.ShieldFactory;
 import dungeonmania.goals.Goal;
 import dungeonmania.goals.GoalFactory;
 import dungeonmania.map.GameMap;
@@ -48,6 +51,7 @@ public class GameBuilder {
         buildMap(game);
         buildGoals(game);
         game.init();
+        game.getPlayer().setRecipe(new Recipe(new BowFactory(config), new ShieldFactory(config)));
 
         return game;
     }

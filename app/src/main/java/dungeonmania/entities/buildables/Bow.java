@@ -4,7 +4,7 @@ import dungeonmania.Game;
 import dungeonmania.battles.BattleStatistics;
 import dungeonmania.entities.collectables.Useable;
 
-public class Bow extends Buildable implements Useable {
+public class Bow extends Buildable implements Useable, InventoryItem {
     private int durability;
 
     public Bow(int durability) {

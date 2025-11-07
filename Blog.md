@@ -69,7 +69,7 @@
 
 ### d) Open Refactoring (12 marks)
 
-[Merge Request 1](/put/links/here)
+[Merge Request 1](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T3/students/z5592426/assignment-ii/-/merge_requests/4)
 
 [Briefly explain what you did]
     In Entity, the abstract methods onOverlap, onMovedAway and onDestroy, are forced to be implemented in all of its subclasses. Howwever, in classes such as Exit, exits cannot be destroyed so such methods can be redunant in certain cases in some of its subclasses. 
@@ -82,6 +82,35 @@
 [Merge Request 2](/put/links/here)
 
 [Briefly explain what you did]
+    Im Inventory.java there is a violation of SRP because the inventory is concerned with inventory management and the crafting system. The crafting in itself violates OCP to add new recipes and new items to build you have to modify the inventory code. To fix this, I wanted to separate the crafting logic so that it was outside of Inventory.java using an abstract factory design pattern. 
+
+    What i wanted was:
+        - inventory concerned with what the player has 
+        - recipe checks if the player actually has the stuff to craft, and then initiates the craft (so then removes the materials they use to craft too)
+        - actual buildables factories crafts the item
+
+    I made a CraftingFactory interface and then a BowFactory and a ShieldFactory. While doing this I discovered buildables are constructed from EntityFactory which is like a god factory because it seems to construct all possible entities. Whilst this factory in itself is poor design because its doing way too much and makes OCP difficult to maintain, since this MR focuses on buildables/inventory cleanup, I'll just focus on just that for now. 
+
+    I made bow and shield factories instead be responsible for the construction of bows and shields rather than entity factory. Having different factories for all types of buildables helped fulfill OCP because if new buildables were added to the system, you just make a new factory for that buildable.
+    Then I made a Receipe.java class so that it had somewhere to call the appropriate factories based on the item the player wanted to craft. it checks if the player has the required items and then removes it from their inventory.
+
+    Then i needed to fix Game.java because getBuildables functionality moved to recipe - same with ResponseBuilder. This meant modifying the getBuildables method in Player to instead pull the data from recipe. This saw me add a method in Recipe called canCraftItems which basically did what was previously implemented but now was in receipe - it returned a lsit of all the items the player could craft based off of their inventory.
+
+    As I ran tests I realised that we had errors saying that the buildables could not be built even though the player had the right materials. I eventually figured out that it was bc the recipe was never set so when getBuildables was called it always returned an empty list. I had to locate where the game was built and then added this line
+        game.getPlayer().setRecipe(new Recipe(new BowFactory(config), new ShieldFactory(config)));
+    into GameBuilder.java so that after the player exists, it created their new recipes for the buildables. 
+
+
+
+[Merge Request 3](/put/links/here)
+
+[Briefly explain what you did]
+
+
+[Merge Request 2](/put/links/here)
+
+[Briefly explain what you did]
+
 
 Add all other changes you made in the same format here:
 
