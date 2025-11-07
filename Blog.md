@@ -96,6 +96,10 @@
 
     Then i needed to fix Game.java because getBuildables functionality moved to recipe - same with ResponseBuilder. This meant modifying the getBuildables method in Player to instead pull the data from recipe. This saw me add a method in Recipe called canCraftItems which basically did what was previously implemented but now was in receipe - it returned a lsit of all the items the player could craft based off of their inventory.
 
+    As I ran tests I realised that we had errors saying that the buildables could not be built even though the player had the right materials. I eventually figured out that it was bc the recipe was never set so when getBuildables was called it always returned an empty list. I had to locate where the game was built and then added this line
+        game.getPlayer().setRecipe(new Recipe(new BowFactory(config), new ShieldFactory(config)));
+    into GameBuilder.java so that after the player exists, it created their new recipes for the buildables. 
+
 
 
 [Merge Request 3](/put/links/here)

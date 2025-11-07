@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import dungeonmania.battles.BattleStatistics;
@@ -78,7 +79,7 @@ public class Player extends Entity implements Battleable, Overlap {
     /** Returns a list of things that can be built by the player currently */
     public List<String> getBuildables() {
         if (recipe == null)
-            return List.of();
+            return new ArrayList<>();
         return recipe.canCraftItems(this);
     }
 
