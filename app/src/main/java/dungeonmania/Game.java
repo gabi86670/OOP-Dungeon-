@@ -218,7 +218,7 @@ public class Game {
         if (!buildables.contains(buildable)) {
             throw new InvalidActionException(String.format("%s cannot be built", buildable));
         }
-        registerOnce(() -> player.build(buildable, entityFactory), PLAYER_MOVEMENT, "playerBuildsItem");
+        registerOnce(() -> player.build(buildable), PLAYER_MOVEMENT, "playerBuildsItem");
         tick();
         return this;
     }

@@ -8,6 +8,7 @@ import java.util.HashSet;
 
 import dungeonmania.battles.BattleStatistics;
 import dungeonmania.battles.Battleable;
+import dungeonmania.entities.buildables.Buildable;
 import dungeonmania.entities.collectables.Bomb;
 import dungeonmania.entities.collectables.Treasure;
 import dungeonmania.entities.collectables.Useable;
@@ -18,6 +19,7 @@ import dungeonmania.entities.enemies.Enemy;
 import dungeonmania.entities.enemies.Mercenary;
 import dungeonmania.entities.inventory.Inventory;
 import dungeonmania.entities.inventory.InventoryItem;
+import dungeonmania.entities.inventory.Recipe;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -48,6 +50,8 @@ public class Player extends Entity implements Battleable, Overlap {
     /** Number of treasures the player has collected */
     private int collectedTreasureCount = 0;
 
+    private Recipe recipe;
+
     public Player(Position position, double health, double attack) {
         super(position);
         battleStatistics = new BattleStatistics(health, attack, 0, BattleStatistics.DEFAULT_DAMAGE_MAGNIFIER,
@@ -67,17 +71,27 @@ public class Player extends Entity implements Battleable, Overlap {
         return inventory.getWeapon();
     }
 
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
+    }
+
     /** Returns a list of things that can be built by the player currently */
     public List<String> getBuildables() {
-        return inventory.getBuildables();
+        if (recipe == null)
+            return List.of();
+        return recipe.canCraftItems(this);
     }
 
     /** Called when the player chooses to craft something. */
-    public boolean build(String entity, EntityFactory factory) {
-        InventoryItem item = inventory.checkBuildCriteria(this, true, entity.equals("shield"), factory);
-        if (item == null)
+    public boolean build(String entity) {
+        if (recipe == null)
+            throw new IllegalStateException("Recipe not set!");
+
+        Buildable craftNew = recipe.craft(entity, this);
+        if (craftNew == null)
             return false;
-        return inventory.add(item);
+
+        return inventory.add((InventoryItem) craftNew);
     }
 
     public void move(GameMap map, Direction direction) {

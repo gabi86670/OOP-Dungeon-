@@ -1,0 +1,74 @@
+package dungeonmania.entities.inventory;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import dungeonmania.entities.Player;
+import dungeonmania.entities.buildables.Buildable;
+import dungeonmania.entities.collectables.Arrow;
+import dungeonmania.entities.collectables.Key;
+import dungeonmania.entities.collectables.Treasure;
+import dungeonmania.entities.collectables.Wood;
+
+public class Recipe {
+    private final BowFactory bowFactory;
+    private final ShieldFactory shieldFactory;
+
+    public Recipe(BowFactory bowFactory, ShieldFactory shieldFactory) {
+        this.bowFactory = bowFactory;
+        this.shieldFactory = shieldFactory;
+    }
+
+    public List<String> canCraftItems(Player player) {
+        Inventory inventory = player.getInventory();
+        List<String> craftables = new ArrayList<>();
+
+        if (inventory.count(Wood.class) >= 1 && inventory.count(Arrow.class) >= 3) {
+            craftables.add("bow");
+        }
+
+        if (inventory.count(Wood.class) >= 2
+                && (inventory.count(Treasure.class) >= 1 || inventory.count(Key.class) >= 1)) {
+            craftables.add("shield");
+        }
+
+        return craftables;
+    }
+
+    public Buildable craft(String item, Player player) {
+        Inventory inventory = player.getInventory();
+        List<Wood> wood = inventory.getEntities(Wood.class);
+
+        switch (item.toLowerCase()) {
+        case "bow":
+            List<Arrow> arrows = inventory.getEntities(Arrow.class);
+            if (wood.size() >= 1 && arrows.size() >= 3) {
+                inventory.remove(wood.get(0));
+                inventory.remove(arrows.get(0));
+                inventory.remove(arrows.get(1));
+                inventory.remove(arrows.get(2));
+
+                return bowFactory.craft();
+            }
+            break;
+        case "shield":
+            List<Treasure> treasure = inventory.getEntities(Treasure.class);
+            List<Key> keys = inventory.getEntities(Key.class);
+            if (wood.size() >= 2 && (treasure.size() >= 1 || keys.size() >= 1)) {
+                inventory.remove(wood.get(0));
+                inventory.remove(wood.get(1));
+                if (treasure.size() >= 1) {
+                    inventory.remove(treasure.get(0));
+                } else {
+                    inventory.remove(keys.get(0));
+                }
+
+                return shieldFactory.craft();
+            }
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown item: " + item);
+        }
+        return null;
+    }
+}

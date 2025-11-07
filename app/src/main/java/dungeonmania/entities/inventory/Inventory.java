@@ -5,15 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import dungeonmania.entities.Entity;
-import dungeonmania.entities.EntityFactory;
-import dungeonmania.entities.Player;
 import dungeonmania.entities.buildables.Bow;
-import dungeonmania.entities.collectables.Arrow;
-import dungeonmania.entities.collectables.Key;
 import dungeonmania.entities.collectables.Sword;
-import dungeonmania.entities.collectables.Treasure;
 import dungeonmania.entities.collectables.Useable;
-import dungeonmania.entities.collectables.Wood;
 
 /**
  * Represents the contents of the player's inventory, containing all their collected and crafted items.
@@ -30,65 +24,6 @@ public class Inventory {
     /** Remove the given item from the inventory */
     public void remove(InventoryItem item) {
         items.remove(item);
-    }
-
-    /** Get the list of possible buildables */
-    public List<String> getBuildables() {
-
-        int wood = count(Wood.class);
-        int arrows = count(Arrow.class);
-        int treasure = count(Treasure.class);
-        int keys = count(Key.class);
-        List<String> result = new ArrayList<>();
-
-        if (wood >= 1 && arrows >= 3) {
-            result.add("bow");
-        }
-        if (wood >= 2 && (treasure >= 1 || keys >= 1)) {
-            result.add("shield");
-        }
-        return result;
-    }
-
-    /**
-     * Check whether a player has the supplies to build a particular buildable. If so, build the item.
-     *
-     * Currently since there are only two buildables we have a boolean to keep track of which buildable it is.
-     *
-     * @param p player object
-     * @param remove whether to remove the build materials from the inventory while crafting the item.
-     * @param forceShield if `true` always craft a shield, otherwise craft a bow if possible, otherwise a shield.
-     * @param factory entity factory
-     */
-    public InventoryItem checkBuildCriteria(Player p, boolean remove, boolean forceShield, EntityFactory factory) {
-
-        List<Wood> wood = getEntities(Wood.class);
-        List<Arrow> arrows = getEntities(Arrow.class);
-        List<Treasure> treasure = getEntities(Treasure.class);
-        List<Key> keys = getEntities(Key.class);
-
-        if (wood.size() >= 1 && arrows.size() >= 3 && !forceShield) {
-            if (remove) {
-                items.remove(wood.get(0));
-                items.remove(arrows.get(0));
-                items.remove(arrows.get(1));
-                items.remove(arrows.get(2));
-            }
-            return factory.buildBow();
-
-        } else if (wood.size() >= 2 && (treasure.size() >= 1 || keys.size() >= 1)) {
-            if (remove) {
-                items.remove(wood.get(0));
-                items.remove(wood.get(1));
-                if (treasure.size() >= 1) {
-                    items.remove(treasure.get(0));
-                } else {
-                    items.remove(keys.get(0));
-                }
-            }
-            return factory.buildShield();
-        }
-        return null;
     }
 
     /**
