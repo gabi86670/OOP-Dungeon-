@@ -79,7 +79,7 @@
     To correct this, i made the abstract methods onOverlap, onMovedAway and onDestroy each their own interface. I didnt group them in a single interface (like entityInteractions) because some entities dont use all 3 methods. E.g., boulders can overlap with things but cant be destroyed. Then i went through all of its subclasses and deleted instances of the methods if they weren't being used. I then edited the GameMap and added checks for places where it called the methods where i added small instanceof checks before calling them.
 
 
-[Merge Request 2](/put/links/here)
+[Merge Request 2](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T3/students/z5592426/assignment-ii/-/merge_requests/5)
 
 [Briefly explain what you did]
     Im Inventory.java there is a violation of SRP because the inventory is concerned with inventory management and the crafting system. The crafting in itself violates OCP to add new recipes and new items to build you have to modify the inventory code. To fix this, I wanted to separate the crafting logic so that it was outside of Inventory.java using an abstract factory design pattern. 
@@ -105,11 +105,17 @@
 [Merge Request 3](/put/links/here)
 
 [Briefly explain what you did]
+    Removed/refactored deprecated methods in Entity called translate. Deprecated methods mean that the method has been superseded by a newer and more efficient approach but it still works for now. The comment above the void translate method that takes in the offset tells us to use setPosition instead. In this MR i will replace calls of translate with setPosition. These changes were made in Bomb's onPutDown and GameMap's MoveTo. 
 
 
-[Merge Request 2](/put/links/here)
+[Merge Request 4](/put/links/here)
 
 [Briefly explain what you did]
+    Law of Demeter states that an object should only talk to its immediate "friends". I.e., a method M of an Object O can only invoke methods that belong to:
+    - o itself
+    - m's parameters
+    - any objects/instantiated in M
+    - O's firect fields (its own instance variables)
 
 
 Add all other changes you made in the same format here:
