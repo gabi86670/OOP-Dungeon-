@@ -131,7 +131,7 @@
     Law of Demeter states that an object should only talk to its immediate friends.
     This is violated in BattleFacade in Battle when setting and retrieving the entities from the map (game.getMap().getEntities) and the health of the player and enemy  - player.getBattleStatistics().setHealth(playerBattleStatistics.getHealth()). 
 
-    I added a method in game .java to get all of the allied mercenaries (getAlliedMercenaries). i refactored a lot of "1. " in battle because it was overreaching a lot to get the player's inventory. I added a getBattleItems method to player, and then in inventory as well whihc returned a list of the player's items that could be used in battle.
+    I added a method in game.java to get all of the allied mercenaries (getAlliedMercenaries). i refactored a lot of "1. " in battle because it was overreaching a lot to get the player's inventory. I added a getBattleItems method to player, and then in inventory as well whihc returned a list of the player's items that could be used in battle.
 
     Then to fix the violations that occured when battlefacade reached into player and enemy to retrieve and set their health, i just made health getters and setters in enemy and player.
 

@@ -276,6 +276,6 @@ public class Game {
     }
 
     public List<Mercenary> getAlliedMercenaries() {
-        return map.getEntities(Mercenary.class).stream().filter(Mercenary::isAllied).collect(Collectors.toList()); // turn back into list
+        return map.getEntities(Mercenary.class).stream().filter(Mercenary::isAllied).collect(Collectors.toList());
     }
 }
