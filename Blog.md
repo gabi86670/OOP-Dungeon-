@@ -102,7 +102,7 @@
 
 
 
-[Merge Request 3](/put/links/here)
+[Merge Request 3](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T3/students/z5592426/assignment-ii/-/merge_requests/6)
 
 [Briefly explain what you did]
     Removed/refactored deprecated methods in Entity called translate. Deprecated methods mean that the method has been superseded by a newer and more efficient approach but it still works for now. The comment above the void translate method that takes in the offset tells us to use setPosition instead. In this MR i will replace calls of translate with setPosition. These changes were made in Bomb's onPutDown and GameMap's MoveTo. 
@@ -111,11 +111,22 @@
 [Merge Request 4](/put/links/here)
 
 [Briefly explain what you did]
-    Law of Demeter states that an object should only talk to its immediate "friends". I.e., a method M of an Object O can only invoke methods that belong to:
-    - o itself
-    - m's parameters
-    - any objects/instantiated in M
-    - O's firect fields (its own instance variables)
+    As mentioned before, entity factory was a bit like a god-class, violating SRP as it is responsible for creating entities and knowing about every single entity type, and also OCP because to add a new entity, you have to modify the switch statement and the file.
+
+    I wanted to fix this by implementing a factory method. 
+    Factory methods typically had the following structure:
+    - product - declares the interface common to all products - already exists via Entity.java
+    - concrete products --> already existed (Player.java, ZombieToast.java etc)
+    - creator class declares factory method that returns new product objects--> needed to make (will call EntityCreator.java)
+    concrete creators - overrides the base factory method  so it returns a different type of product --> needed to make
+    
+    This meant that i then needed to refactor entityfactory to act as the registry - used to choose which concrete creator it should use. 
+
+    Since all the creators use pos, i added in a getPosition in entityCreator so the same line of code wasnt constantly in a bunch of files.
+
+    For spawnSpider and spawnZombie i needed to modify them to use the creators. In EntityFactory, since it was becoming a registry for all creators, i created a hash map of entity types to replace the big switch statement that manually created each entity. Then the entityfactory class registered all these creators, and added them to the creators map in registerCreato. This allows createEntity to look up the right creator dynamically by type. These entities were then created in createEntity. I decided to keep spawn logic in entityfactory since the factory decides when and where to place spiders and zombies in the world and the logic for spawning a spider and zombie is universal for all its types.
+
+
 
 
 Add all other changes you made in the same format here:
