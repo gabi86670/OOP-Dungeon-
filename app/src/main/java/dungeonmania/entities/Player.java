@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import dungeonmania.Game;
 import dungeonmania.battles.BattleStatistics;
 import dungeonmania.battles.Battleable;
 import dungeonmania.entities.buildables.Buildable;
@@ -186,6 +187,23 @@ public class Player extends Entity implements Battleable, Overlap {
         return battleStatistics;
     }
 
+    public BattleStatistics getBattleStatisticsBuffs(Game game) {
+        BattleStatistics stats = this.getBattleStatistics();
+
+        // Apply potion buff if active
+        stats = applyBuff(stats);
+
+        // Apply inventory buffs and use items
+        for (InventoryItem item : inventory.getEntities(InventoryItem.class)) {
+            if (item instanceof Useable useable) {
+                stats = item.applyBuff(stats);
+                useable.use(game);
+            }
+        }
+
+        return stats;
+    }
+
     public <T extends InventoryItem> int countEntityOfType(Class<T> itemType) {
         return inventory.count(itemType);
     }
@@ -208,5 +226,17 @@ public class Player extends Entity implements Battleable, Overlap {
 
     public void removePotionListener(PotionListener e) {
         potionListeners.remove(e);
+    }
+
+    public List<InventoryItem> getBattleItems() {
+        return inventory.getBattleItems();
+    }
+
+    public double getHealth() {
+        return battleStatistics.getHealth();
+    }
+
+    public void setHealth(double health) {
+        battleStatistics.setHealth(health);
     }
 }

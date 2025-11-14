@@ -51,4 +51,12 @@ public abstract class Enemy extends Entity implements Battleable, Overlap, Destr
      * When called, this enemy should move to a new position.
      */
     public abstract void move(Game game);
+
+    public double getHealth() {
+        return battleStatistics.getHealth();
+    }
+
+    public void setHealth(double health) {
+        battleStatistics.setHealth(health);
+    }
 }
