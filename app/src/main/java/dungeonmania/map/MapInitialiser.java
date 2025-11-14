@@ -1,6 +1,5 @@
 package dungeonmania.map;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +71,6 @@ public class MapInitialiser {
     /** Pair up portals if there's any */
     private void initPairPortals() {
         Map<String, Portal> portalsMap = new HashMap<>();
-        List<Portal> portals = map.getEntities(Portal.class);
         nodes.forEach((k, v) -> {
             v.getEntities().stream().filter(Portal.class::isInstance).map(Portal.class::cast).forEach(portal -> {
                 String color = portal.getColor();
