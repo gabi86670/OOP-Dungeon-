@@ -126,7 +126,7 @@
 
     For spawnSpider and spawnZombie i needed to modify them to use the creators. In EntityFactory, since it was becoming a registry for all creators, i created a hash map of entity types to replace the big switch statement that manually created each entity. Then the entityfactory class registered all these creators, and added them to the creators map in registerCreato. This allows createEntity to look up the right creator dynamically by type. These entities were then created in createEntity. I decided to keep spawn logic in entityfactory since the factory decides when and where to place spiders and zombies in the world and the logic for spawning a spider and zombie is universal for all its types.
 
-[Merge Request 5]()
+[Merge Request 5](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T3/students/z5592426/assignment-ii/-/merge_requests/8)
 [Briefly explain what you did]
     Law of Demeter states that an object should only talk to its immediate friends.
     This is violated in BattleFacade in Battle when setting and retrieving the entities from the map (game.getMap().getEntities) and the health of the player and enemy  - player.getBattleStatistics().setHealth(playerBattleStatistics.getHealth()). 
@@ -137,6 +137,7 @@
 
 [Merge Request 6]()
 [Briefly explain what you did]
+    I corrected Law of Demeter violations in Game.java by implementing my use of getHealth() methods in player and enemy. 
 
 [Merge Request 7]()
 [Briefly explain what you did]
