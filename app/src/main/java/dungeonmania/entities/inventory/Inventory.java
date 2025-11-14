@@ -6,8 +6,10 @@ import java.util.stream.Collectors;
 
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.buildables.Bow;
+import dungeonmania.entities.buildables.Shield;
 import dungeonmania.entities.collectables.Sword;
 import dungeonmania.entities.collectables.Useable;
+import dungeonmania.entities.collectables.potions.Potion;
 
 /**
  * Represents the contents of the player's inventory, containing all their collected and crafted items.
@@ -95,6 +97,11 @@ public class Inventory {
         if (weapon == null)
             return getFirst(Bow.class);
         return weapon;
+    }
+
+    public List<InventoryItem> getBattleItems() {
+        return items.stream().filter(item -> item instanceof Bow || item instanceof Shield || item instanceof Sword
+                || item instanceof Potion).collect(Collectors.toList());
     }
 
 }
