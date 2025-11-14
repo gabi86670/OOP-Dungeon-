@@ -126,7 +126,7 @@ public class EntityFactory {
         JSONObject json = new JSONObject().put("x", spawnPos.getX()).put("y", spawnPos.getY());
         ZombieToast zt = (ZombieToast) creator.createEntity(json, config);
         map.addEntity(zt);
-        map.registerPotionListener(zt);
+        game.getPlayer().registerPotionListener(zt);
         game.register(() -> zt.move(game), Game.AI_MOVEMENT, zt.getId());
     }
 }

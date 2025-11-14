@@ -135,12 +135,17 @@
 
     Then to fix the violations that occured when battlefacade reached into player and enemy to retrieve and set their health, i just made health getters and setters in enemy and player.
 
-[Merge Request 6]()
+[Merge Request 6](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T3/students/z5592426/assignment-ii/-/merge_requests/9)
 [Briefly explain what you did]
     I corrected Law of Demeter violations in Game.java by implementing my use of getHealth() methods in player and enemy. 
 
 [Merge Request 7]()
 [Briefly explain what you did]
+    GameMap.java has some violations of SRP because its responsible for the initialisation of the gamemap and then also all the current movements and responsibilities of the gamemap (e.g., entity movements, etc).
+
+    Resolved by extracting the initiationalisation responsibilities out of GameMap into MapInitialiser.java. I made helper functions getEntities to return all entities and then entities of a specific type, depending on what's parsed in the function.
+
+    I then needed to make fixes in Game.java (change the initialisation to occur in MapInitialiser), in EntityFactory (gameMap no longer had a registerPotionListener method so i just registered it directly with the player instead)
 
 [Merge Request 8]()
 [Briefly explain what you did]

@@ -15,11 +15,6 @@ import dungeonmania.entities.MovedAway;
 import dungeonmania.entities.Overlap;
 import dungeonmania.entities.Player;
 import dungeonmania.entities.Portal;
-import dungeonmania.entities.PotionListener;
-import dungeonmania.entities.Switch;
-import dungeonmania.entities.collectables.Bomb;
-import dungeonmania.entities.enemies.Enemy;
-import dungeonmania.entities.enemies.ZombieToastSpawner;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -38,81 +33,6 @@ public class GameMap {
     private Game game;
     /** Reference to the game's player. */
     private Player player;
-
-    /**
-     * Initialise the game map
-     * 1. pair up portals
-     * 2. register all movables
-     * 3. register all spawners
-     * 4. register bombs and switches
-     * 5. more...
-     */
-    public void init() {
-        initPairPortals();
-        initRegisterMovables();
-        initRegisterSpawners();
-        initRegisterBombsAndSwitches();
-        initPotionListeners();
-    }
-
-    /** Subscribe bombs and switches to each other */
-    private void initRegisterBombsAndSwitches() {
-        List<Bomb> bombs = getEntities(Bomb.class);
-        List<Switch> switchs = getEntities(Switch.class);
-        for (Bomb b : bombs) {
-            for (Switch s : switchs) {
-                if (Position.isAdjacent(b.getPosition(), s.getPosition())) {
-                    s.subscribe(b, this);
-                }
-            }
-        }
-    }
-
-    /** Pair up portals if there's any */
-    private void initPairPortals() {
-        Map<String, Portal> portalsMap = new HashMap<>();
-        nodes.forEach((k, v) -> {
-            v.getEntities().stream().filter(Portal.class::isInstance).map(Portal.class::cast).forEach(portal -> {
-                String color = portal.getColor();
-                if (portalsMap.containsKey(color)) {
-                    portal.bind(portalsMap.get(color));
-                } else {
-                    portalsMap.put(color, portal);
-                }
-            });
-        });
-    }
-
-    /** Register each enemy to move on each tick. */
-    private void initRegisterMovables() {
-        List<Enemy> enemies = getEntities(Enemy.class);
-        enemies.forEach(e -> {
-            game.register(() -> e.move(game), Game.AI_MOVEMENT, e.getId());
-        });
-    }
-
-    /**
-     * Register each zombie toast spawner to attempt to spawn an enemy each tick as well as initialise the spider
-     * spawning mechanic.
-     */
-    private void initRegisterSpawners() {
-        List<ZombieToastSpawner> zts = getEntities(ZombieToastSpawner.class);
-        zts.forEach(e -> {
-            game.register(() -> e.spawn(game), Game.AI_MOVEMENT, e.getId());
-        });
-        game.register(() -> game.getEntityFactory().spawnSpider(game), Game.AI_MOVEMENT, "spawnSpiders");
-    }
-
-    /** Initialise and register "potion listeners" to be responsive to player potion updates */
-    private void initPotionListeners() {
-        getEntities().stream().filter(PotionListener.class::isInstance).map(PotionListener.class::cast)
-                .forEach(this::registerPotionListener);
-    }
-
-    /** Register a potion listener on the player */
-    public void registerPotionListener(PotionListener e) {
-        player.registerPotionListener(e);
-    }
 
     /** Move an entity to a position */
     public void moveTo(Entity entity, Position position) {
@@ -351,5 +271,9 @@ public class GameMap {
 
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    public Map<Position, MapTile> getNodes() {
+        return nodes;
     }
 }
