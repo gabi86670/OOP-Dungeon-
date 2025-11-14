@@ -17,6 +17,7 @@ import dungeonmania.entities.enemies.Mercenary;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.goals.Goal;
 import dungeonmania.map.GameMap;
+import dungeonmania.map.MapInitialiser;
 import dungeonmania.util.Direction;
 
 public class Game {
@@ -48,7 +49,9 @@ public class Game {
 
     public void init() {
         this.id = UUID.randomUUID().toString();
-        map.init();
+        this.player = map.getPlayer();
+        MapInitialiser initialiser = new MapInitialiser(this, map, player, map.getNodes());
+        initialiser.init();
         this.tickCount = 0;
         player = map.getPlayer();
         register(() -> player.onTick(tickCount), POTION_BRIBE_UPDATE, "potionQueue");
