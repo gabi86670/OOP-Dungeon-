@@ -56,10 +56,10 @@ public class Game {
 
     public void battle(Player player, Enemy enemy) {
         battleFacade.battle(this, player, enemy);
-        if (player.getBattleStatistics().getHealth() <= 0) {
+        if (player.getHealth() <= 0) {
             map.destroyEntity(player);
         }
-        if (enemy.getBattleStatistics().getHealth() <= 0) {
+        if (enemy.getHealth() <= 0) {
             map.destroyEntity(enemy);
         }
     }
