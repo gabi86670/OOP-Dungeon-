@@ -6,6 +6,7 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.Interactable;
 import dungeonmania.entities.Player;
 import dungeonmania.entities.PotionListener;
+import dungeonmania.entities.buildables.Sceptre;
 import dungeonmania.entities.collectables.SunStone;
 import dungeonmania.entities.collectables.Treasure;
 import dungeonmania.entities.collectables.potions.InvincibilityPotion;
@@ -31,6 +32,8 @@ public class Mercenary extends Enemy implements Interactable, PotionListener {
     private double allyAttack;
     private double allyDefence;
     private boolean allied = false;
+    private int mindControlDuration = 0;
+    private boolean mindControlled = false;
 
     /** Type of movement to use */
     private MovementStrategy movementStrategy = new HostileMovement();
@@ -77,19 +80,41 @@ public class Mercenary extends Enemy implements Interactable, PotionListener {
 
     @Override
     public void interact(Player player, Game game) {
-        allied = true;
-        this.movementStrategy = new AlliedMovement();
-        bribe(player);
+        Sceptre sceptre = player.getInventory().getFirst(Sceptre.class);
+
+        if (canBeBribed(player)) {
+            allied = true;
+            mindControlled = false;
+            this.movementStrategy = new AlliedMovement();
+            bribe(player);
+            return;
+        } else if (sceptre != null) {
+            allied = true;
+            mindControlled = true;
+            this.movementStrategy = new AlliedMovement();
+            mindControlDuration = sceptre.getDurability();
+            sceptre.use(game);
+        }
     }
 
     @Override
     public void move(Game game) {
+        if (mindControlled && mindControlDuration == 0) {
+            allied = false;
+            mindControlled = false;
+            movementStrategy = new HostileMovement();
+        }
+
         movementStrategy.move(game, this);
+
+        if (mindControlled && mindControlDuration > 0) {
+            mindControlDuration--;
+        }
     }
 
     @Override
     public boolean isInteractable(Player player) {
-        return !allied && canBeBribed(player);
+        return !allied && (player.getInventory().getFirst(Sceptre.class) != null || canBeBribed(player));
     }
 
     @Override

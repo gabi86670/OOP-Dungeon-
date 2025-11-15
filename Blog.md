@@ -162,6 +162,7 @@
 
 [Design]
     SunStone --> Made SunStone extend Treasure since its a special form of treasure
+    Sceptre --> builable when implements Usable. Item is removed after durability (set num) is 0 bc then the game would be too OP - so durability = mind_control_duration. 
 
 **Changes after review**
 
@@ -172,6 +173,12 @@
         - Edit door logic so sunStones could also be used as keys for doors in Door.java (edited hasKey method). Also edited onOverlap method in Door.java to ensure sunstones were not consumed upon opening a door.
         - excluded sunstones from bribery in Mercenary.java. Edited canBeBribed to exclude sunStones and then made method useBribeTreasure (in Player.java) to pull only treasure (not sunStones) so it could be used in bribe() to ensure sunStones are not used in bribing mercenaries. 
         - Crafting logic - ensured sunStones could be used as a replacement for keys/treasure in crafting but is not removed from inventory after replacement.
+
+    Sceptre:
+        - Make Sceptre.java
+        - Make sceptre factory
+        - add recipe and edit constructor and added recipe to game builder
+        - add functionality to mercenary
 
         
 
@@ -184,6 +191,10 @@
     - only treasure in inventory is sunstone - check cant be used for bribing mercenaries.
     - mixed treasures - check not able to use in bribing mercenaries
     - used instead to craft shield and not deleted
+
+    sceptre
+    - craft a scepre and add to inventory
+    - mindcontrol working completely - bro idek if its working
 
 **Other notes**
 

@@ -8,7 +8,6 @@ import dungeonmania.DungeonManiaController;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.GenericResponseWrapper;
 import dungeonmania.util.Direction;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;

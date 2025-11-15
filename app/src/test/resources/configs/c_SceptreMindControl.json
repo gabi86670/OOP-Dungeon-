@@ -1,0 +1,9 @@
+{
+    "player_health": 100,
+    "player_attack": 10,
+    "mercenary_health": 20,
+    "mercenary_attack": 5,
+    "mind_control_duration": 2,
+    "bribe_radius": 1,
+    "bribe_amount": 1
+}

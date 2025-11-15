@@ -211,7 +211,7 @@ public class Player extends Entity implements Battleable, Overlap {
 
         // Apply inventory buffs and use items
         for (InventoryItem item : inventory.getEntities(InventoryItem.class)) {
-            if (item instanceof Useable useable) {
+            if (item instanceof Useable useable && !(item instanceof Potion)) {
                 stats = item.applyBuff(stats);
                 useable.use(game);
             }

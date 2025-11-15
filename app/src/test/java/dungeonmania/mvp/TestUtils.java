@@ -260,4 +260,8 @@ public class TestUtils {
         return l1.containsAll(l2) && l2.containsAll(l1);
     }
 
+    public static boolean isMindControlled(DungeonResponse res, String mercId) {
+        Optional<EntityResponse> merc = getEntityById(res, mercId);
+        return merc.isPresent() && !merc.get().isInteractable();
+    }
 }
