@@ -6,6 +6,7 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.Interactable;
 import dungeonmania.entities.Player;
 import dungeonmania.entities.PotionListener;
+import dungeonmania.entities.collectables.SunStone;
 import dungeonmania.entities.collectables.Treasure;
 import dungeonmania.entities.collectables.potions.InvincibilityPotion;
 import dungeonmania.entities.collectables.potions.InvisibilityPotion;
@@ -61,7 +62,8 @@ public class Mercenary extends Enemy implements Interactable, PotionListener {
         Position playerPos = player.getPosition();
         int distance = Math.abs(playerPos.getX() - getPosition().getX())
                 + Math.abs(playerPos.getY() - getPosition().getY());
-        return distance <= bribeRadius && player.countEntityOfType(Treasure.class) >= bribeAmount;
+        int numTreasure = player.countEntityOfType(Treasure.class) - player.countEntityOfType(SunStone.class);
+        return distance <= bribeRadius && numTreasure >= bribeAmount;
     }
 
     /**
@@ -69,9 +71,8 @@ public class Mercenary extends Enemy implements Interactable, PotionListener {
      */
     private void bribe(Player player) {
         for (int i = 0; i < bribeAmount; i++) {
-            player.use(Treasure.class);
+            player.useBribeTreasure();
         }
-
     }
 
     @Override

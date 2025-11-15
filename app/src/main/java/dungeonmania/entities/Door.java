@@ -3,6 +3,7 @@ package dungeonmania.entities;
 import dungeonmania.map.GameMap;
 
 import dungeonmania.entities.collectables.Key;
+import dungeonmania.entities.collectables.SunStone;
 import dungeonmania.entities.enemies.Spider;
 import dungeonmania.entities.inventory.Inventory;
 import dungeonmania.util.Position;
@@ -31,9 +32,12 @@ public class Door extends Entity implements Overlap {
 
         Inventory inventory = player.getInventory();
         Key key = inventory.getFirst(Key.class);
+        SunStone stone = inventory.getFirst(SunStone.class);
 
-        if (hasKey(player)) {
+        if (key != null && key.getnumber() == number) {
             inventory.remove(key);
+            open();
+        } else if (stone != null) {
             open();
         }
     }
@@ -42,8 +46,11 @@ public class Door extends Entity implements Overlap {
     private boolean hasKey(Player player) {
         Inventory inventory = player.getInventory();
         Key key = inventory.getFirst(Key.class);
-
-        return (key != null && key.getnumber() == number);
+        if (key != null && key.getnumber() == number) {
+            return true;
+        }
+        SunStone stone = inventory.getFirst(SunStone.class);
+        return stone != null;
     }
 
     public boolean isOpen() {

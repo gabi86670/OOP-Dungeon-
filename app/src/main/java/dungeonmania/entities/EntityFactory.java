@@ -14,6 +14,7 @@ import dungeonmania.entities.entityfactories.MercenaryCreator;
 import dungeonmania.entities.entityfactories.PlayerCreator;
 import dungeonmania.entities.entityfactories.PortalCreator;
 import dungeonmania.entities.entityfactories.SpiderCreator;
+import dungeonmania.entities.entityfactories.SunStoneCreator;
 import dungeonmania.entities.entityfactories.SwitchCreator;
 import dungeonmania.entities.entityfactories.SwordCreator;
 import dungeonmania.entities.entityfactories.TreasureCreator;
@@ -60,6 +61,7 @@ public class EntityFactory {
         registerCreator(new ExitCreator());
         registerCreator(new ArrowCreator());
         registerCreator(new WallCreator());
+        registerCreator(new SunStoneCreator());
     }
 
     private void registerCreator(EntityCreator creator) {

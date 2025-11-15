@@ -11,27 +11,9 @@ import dungeonmania.entities.EntityFactory;
  * Factory that creates a MapTile from a JSON Object
  */
 public class MapTileFactory {
-    private static final List<String> VALID_ENTITIES = Arrays.asList(
-            "player",
-            "zombie_toast",
-            "zombie_toast_spawner",
-            "mercenary",
-            "wall",
-            "boulder",
-            "switch",
-            "exit",
-            "treasure",
-            "wood",
-            "arrow",
-            "bomb",
-            "invisibility_potion",
-            "invincibility_potion",
-            "portal",
-            "sword",
-            "spider",
-            "door",
-            "key"
-        );
+    private static final List<String> VALID_ENTITIES = Arrays.asList("player", "zombie_toast", "zombie_toast_spawner",
+            "mercenary", "wall", "boulder", "switch", "exit", "treasure", "wood", "arrow", "bomb",
+            "invisibility_potion", "invincibility_potion", "portal", "sword", "spider", "door", "key", "sun_stone");
 
     public static MapTile createEntity(JSONObject jsonEntity, EntityFactory factory) {
         return constructEntity(jsonEntity, factory);
