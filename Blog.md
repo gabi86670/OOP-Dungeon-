@@ -139,7 +139,7 @@
 [Briefly explain what you did]
     I corrected Law of Demeter violations in Game.java by implementing my use of getHealth() methods in player and enemy. 
 
-[Merge Request 7]()
+[Merge Request 7](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T3/students/z5592426/assignment-ii/-/merge_requests/10)
 [Briefly explain what you did]
     GameMap.java has some violations of SRP because its responsible for the initialisation of the gamemap and then also all the current movements and responsibilities of the gamemap (e.g., entity movements, etc).
 
@@ -147,17 +147,12 @@
 
     I then needed to make fixes in Game.java (change the initialisation to occur in MapInitialiser), in EntityFactory (gameMap no longer had a registerPotionListener method so i just registered it directly with the player instead)
 
-[Merge Request 8]()
-[Briefly explain what you did]
-
 
 ## Task 2) Evolution of Requirements 🔧
 
-[DELETE ONE OF THESE!]
-
 ### Sun Stone & More Buildables (20 marks)
 
-[Links to your merge requests](/put/links/here)
+[Links to your merge requests](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T3/students/z5592426/assignment-ii/-/merge_requests/11)
 
 **Assumptions**
 
@@ -166,38 +161,29 @@
 **Design**
 
 [Design]
+    SunStone --> Made SunStone extend Treasure since its a special form of treasure
 
 **Changes after review**
 
 [Design review/Changes made]
+    Sunstone:
+        - Make product creator (SunStoneCreator) and added to Entity Factory
+        - Changed pickUp method in Player.java to ensure SunStone counts towards treasure goal
+        - Edit door logic so sunStones could also be used as keys for doors in Door.java (edited hasKey method). Also edited onOverlap method in Door.java to ensure sunstones were not consumed upon opening a door.
+        - excluded sunstones from bribery in Mercenary.java. Edited canBeBribed to exclude sunStones and then made method useBribeTreasure (in Player.java) to pull only treasure (not sunStones) so it could be used in bribe() to ensure sunStones are not used in bribing mercenaries. 
+        - Crafting logic - ensured sunStones could be used as a replacement for keys/treasure in crafting but is not removed from inventory after replacement.
+
+        
 
 **Test list**
 
 [Test List]
-
-**Other notes**
-
-[Any other notes]
-
-### Logic Switches (30 marks)
-
-[Links to your merge requests](/put/links/here)
-
-**Assumptions**
-
-[Any assumptions made]
-
-**Design**
-
-[Design]
-
-**Changes after review**
-
-[Design review/Changes made]
-
-**Test list**
-
-[Test List]
+    - Make a sunstone correctly and add to ivnentory 
+    - sunstone used in treasure goal
+    - sunstone used to open door and not deleted
+    - only treasure in inventory is sunstone - check cant be used for bribing mercenaries.
+    - mixed treasures - check not able to use in bribing mercenaries
+    - used instead to craft shield and not deleted
 
 **Other notes**
 

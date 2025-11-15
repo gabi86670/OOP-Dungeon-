@@ -12,6 +12,7 @@ import dungeonmania.battles.BattleStatistics;
 import dungeonmania.battles.Battleable;
 import dungeonmania.entities.buildables.Buildable;
 import dungeonmania.entities.collectables.Bomb;
+import dungeonmania.entities.collectables.SunStone;
 import dungeonmania.entities.collectables.Treasure;
 import dungeonmania.entities.collectables.Useable;
 import dungeonmania.entities.collectables.potions.InvincibilityPotion;
@@ -120,7 +121,7 @@ public class Player extends Entity implements Battleable, Overlap {
     }
 
     public boolean pickUp(Entity item) {
-        if (item instanceof Treasure)
+        if (item instanceof Treasure || item instanceof SunStone)
             collectedTreasureCount++;
         return inventory.add((InventoryItem) item);
     }
@@ -142,6 +143,21 @@ public class Player extends Entity implements Battleable, Overlap {
         T item = inventory.getFirst(itemType);
         if (item != null)
             inventory.remove(item);
+    }
+
+    /*
+     * Use a treasure item, exclucding SunStones.
+     *
+     * This removes a treasure (excluding SunStones) from the player's inventory.
+     * If the player has no treasures, then nothing happens.
+     */
+    public void useBribeTreasure() {
+        InventoryItem i = inventory.getEntities(Treasure.class).stream().filter(item -> !(item instanceof SunStone))
+                .findFirst().orElse(null);
+
+        if (i != null) {
+            inventory.remove(i);
+        }
     }
 
     /** Called when the player places a bomb */

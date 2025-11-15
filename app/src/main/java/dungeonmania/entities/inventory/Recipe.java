@@ -7,6 +7,7 @@ import dungeonmania.entities.Player;
 import dungeonmania.entities.buildables.Buildable;
 import dungeonmania.entities.collectables.Arrow;
 import dungeonmania.entities.collectables.Key;
+import dungeonmania.entities.collectables.SunStone;
 import dungeonmania.entities.collectables.Treasure;
 import dungeonmania.entities.collectables.Wood;
 
@@ -54,12 +55,17 @@ public class Recipe {
         case "shield":
             List<Treasure> treasure = inventory.getEntities(Treasure.class);
             List<Key> keys = inventory.getEntities(Key.class);
-            if (wood.size() >= 2 && (treasure.size() >= 1 || keys.size() >= 1)) {
+            List<Treasure> normalTreasure = treasure.stream().filter(t -> !(t instanceof SunStone)).toList();
+            List<SunStone> sunStones = treasure.stream().filter(t -> t instanceof SunStone).map(t -> (SunStone) t)
+                    .toList();
+
+            if (wood.size() >= 2 && (normalTreasure.size() >= 1 || keys.size() >= 1 || sunStones.size() >= 1)) {
                 inventory.remove(wood.get(0));
                 inventory.remove(wood.get(1));
-                if (treasure.size() >= 1) {
-                    inventory.remove(treasure.get(0));
-                } else {
+
+                if (normalTreasure.size() >= 1) {
+                    inventory.remove(normalTreasure.get(0));
+                } else if (keys.size() >= 1) {
                     inventory.remove(keys.get(0));
                 }
 
