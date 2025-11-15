@@ -15,8 +15,6 @@ public class Sword extends InventoryItem implements Useable {
     public static final double DEFAULT_DEFENCE = 0;
     public static final double DEFAULT_DEFENCE_SCALE_FACTOR = 1;
 
-    // private Durability durability;
-
     public Sword(Position position, double attack, int durability) {
         super(position);
         setDurability(new Durability(durability));

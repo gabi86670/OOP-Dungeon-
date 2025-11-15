@@ -1,13 +1,15 @@
 package dungeonmania.entities.collectables.potions;
 
+import dungeonmania.Game;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.Player;
 import dungeonmania.entities.collectables.Durability;
+import dungeonmania.entities.collectables.Useable;
 import dungeonmania.entities.inventory.InventoryItem;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
-public abstract class Potion extends InventoryItem {
+public abstract class Potion extends InventoryItem implements Useable {
     private int duration;
 
     public Potion(Position position, int duration) {
@@ -27,5 +29,11 @@ public abstract class Potion extends InventoryItem {
 
     public int getDuration() {
         return duration;
+    }
+
+    @Override
+    public void use(Game game) {
+        // only enqueue potion
+        game.getPlayer().use(this, game.getTick());
     }
 }
