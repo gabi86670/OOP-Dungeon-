@@ -152,7 +152,7 @@
 
 ### Sun Stone & More Buildables (20 marks)
 
-[Links to your merge requests](/put/links/here)
+[Links to your merge requests](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T3/students/z5592426/assignment-ii/-/merge_requests/11)
 
 **Assumptions**
 
@@ -180,10 +180,10 @@
 [Test List]
     - Make a sunstone correctly and add to ivnentory 
     - sunstone used in treasure goal
-    - sunstone used to open door - check not deleted
+    - sunstone used to open door and not deleted
     - only treasure in inventory is sunstone - check cant be used for bribing mercenaries.
     - mixed treasures - check not able to use in bribing mercenaries
-    - used instead to craft shield - CHECK NOT DELETED
+    - used instead to craft shield and not deleted
 
 **Other notes**
 

@@ -147,7 +147,7 @@ public class Player extends Entity implements Battleable, Overlap {
 
     /*
      * Use a treasure item, exclucding SunStones.
-     * 
+     *
      * This removes a treasure (excluding SunStones) from the player's inventory.
      * If the player has no treasures, then nothing happens.
      */
