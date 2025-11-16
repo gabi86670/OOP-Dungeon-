@@ -99,16 +99,16 @@ public class Mercenary extends Enemy implements Interactable, PotionListener {
 
     @Override
     public void move(Game game) {
-        if (mindControlled && mindControlDuration == 0) {
-            allied = false;
-            mindControlled = false;
-            movementStrategy = new HostileMovement();
-        }
-
         movementStrategy.move(game, this);
 
+        // after movement, decr duration
         if (mindControlled && mindControlDuration > 0) {
             mindControlDuration--;
+            if (mindControlDuration == 0) {
+                allied = false;
+                mindControlled = false;
+                movementStrategy = new HostileMovement();
+            }
         }
     }
 
