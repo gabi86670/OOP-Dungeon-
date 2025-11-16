@@ -36,7 +36,7 @@ import dungeonmania.util.Position;
 public class Player extends Entity implements Battleable, Overlap {
     public static final double DEFAULT_ATTACK = 5.0;
     public static final double DEFAULT_HEALTH = 5.0;
-    /** Stats used when the player goes into battle */
+    /** Stats used when the player goes yeao battle */
     private BattleStatistics battleStatistics;
     private Inventory inventory;
     /**

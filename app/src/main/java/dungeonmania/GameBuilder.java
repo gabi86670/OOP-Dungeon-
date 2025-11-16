@@ -8,6 +8,7 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityFactory;
 import dungeonmania.entities.Player;
 import dungeonmania.entities.inventory.BowFactory;
+import dungeonmania.entities.inventory.MidnightArmourFactory;
 import dungeonmania.entities.inventory.Recipe;
 import dungeonmania.entities.inventory.SceptreFactory;
 import dungeonmania.entities.inventory.ShieldFactory;
@@ -52,8 +53,9 @@ public class GameBuilder {
         buildMap(game);
         buildGoals(game);
         game.init();
-        game.getPlayer()
-                .setRecipe(new Recipe(new BowFactory(config), new ShieldFactory(config), new SceptreFactory(config)));
+        GameMap map = game.getMap();
+        game.getPlayer().setRecipe(new Recipe(map, new BowFactory(config), new ShieldFactory(config),
+                new SceptreFactory(config), new MidnightArmourFactory(config)));
 
         return game;
     }
