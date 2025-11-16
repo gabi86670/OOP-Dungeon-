@@ -71,9 +71,29 @@ public class SceptreTest {
         assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
         res = dmc.tick(Direction.RIGHT);
         assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
-        // expire
+        // expires
         res = dmc.tick(Direction.UP);
-        // assertTrue(TestUtils.getEntityById(res, mercId).get().isInteractable());
+        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
+        res = dmc.tick(Direction.UP);
+        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
+        res = dmc.tick(Direction.UP);
+        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
+        res = dmc.tick(Direction.UP);
+        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
+        res = dmc.tick(Direction.UP);
+        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
+        res = dmc.tick(Direction.UP);
+        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
+        res = dmc.tick(Direction.UP);
+        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
+        res = dmc.tick(Direction.UP);
+        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
+        res = dmc.tick(Direction.UP);
+        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
+        res = dmc.tick(Direction.UP);
+        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
+        // now its hostile
+        res = dmc.tick(Direction.UP);
     }
 
 }
