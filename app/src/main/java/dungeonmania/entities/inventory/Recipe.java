@@ -3,7 +3,6 @@ package dungeonmania.entities.inventory;
 import java.util.ArrayList;
 import java.util.List;
 
-import dungeonmania.Game;
 import dungeonmania.entities.Player;
 import dungeonmania.entities.buildables.Buildable;
 import dungeonmania.entities.collectables.Arrow;
