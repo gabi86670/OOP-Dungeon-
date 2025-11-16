@@ -8,24 +8,40 @@ import dungeonmania.entities.buildables.Buildable;
 import dungeonmania.entities.collectables.Arrow;
 import dungeonmania.entities.collectables.Key;
 import dungeonmania.entities.collectables.SunStone;
+import dungeonmania.entities.collectables.Sword;
 import dungeonmania.entities.collectables.Treasure;
 import dungeonmania.entities.collectables.Wood;
+import dungeonmania.entities.enemies.ZombieToast;
+import dungeonmania.entities.enemies.ZombieToastSpawner;
+import dungeonmania.map.GameMap;
 
 public class Recipe {
+    private final GameMap map;
+
     private final BowFactory bowFactory;
     private final ShieldFactory shieldFactory;
     private final SceptreFactory sceptreFactory;
+    private final MidnightArmourFactory armourFactory;
 
-    public Recipe(BowFactory bowFactory, ShieldFactory shieldFactory, SceptreFactory sceptreFactory) {
+    public Recipe(GameMap map, BowFactory bowFactory, ShieldFactory shieldFactory, SceptreFactory sceptreFactory,
+            MidnightArmourFactory armourFactory) {
+        this.map = map;
         this.bowFactory = bowFactory;
         this.shieldFactory = shieldFactory;
         this.sceptreFactory = sceptreFactory;
+        this.armourFactory = armourFactory;
+
+    }
+
+    private boolean hasZombies() {
+        return map.getEntities().stream().anyMatch(e -> e instanceof ZombieToast || e instanceof ZombieToastSpawner);
     }
 
     public List<String> canCraftItems(Player player) {
         Inventory inventory = player.getInventory();
         List<String> craftables = new ArrayList<>();
         int numTreasure = player.countEntityOfType(Treasure.class) - player.countEntityOfType(SunStone.class);
+        Sword sword = inventory.getFirst(Sword.class);
 
         if (inventory.count(Wood.class) >= 1 && inventory.count(Arrow.class) >= 3) {
             craftables.add("bow");
@@ -42,6 +58,10 @@ public class Recipe {
             craftables.add("sceptre");
         }
 
+        if (!hasZombies() && inventory.count(SunStone.class) >= 1 && sword != null) {
+            craftables.add("midnight_armour");
+        }
+
         return craftables;
     }
 
@@ -53,6 +73,7 @@ public class Recipe {
         List<Key> keys = inventory.getEntities(Key.class);
         List<Treasure> normalTreasure = treasure.stream().filter(t -> !(t instanceof SunStone)).toList();
         List<SunStone> sunStones = treasure.stream().filter(t -> t instanceof SunStone).map(t -> (SunStone) t).toList();
+        Sword sword = inventory.getFirst(Sword.class);
 
         switch (item.toLowerCase()) {
         case "bow":
@@ -98,6 +119,17 @@ public class Recipe {
                 }
 
                 return sceptreFactory.craft();
+            }
+            break;
+        case "midnight_armour":
+            if (!hasZombies() && sunStones.size() >= 1 && sword != null) {
+                if (sunStones.size() >= 1) {
+                    inventory.remove(sunStones.get(0));
+                }
+                if (sword != null) {
+                    inventory.remove(sword); // does this work LOL
+                }
+                return armourFactory.craft();
             }
             break;
         default:

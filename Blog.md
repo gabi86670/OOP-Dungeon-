@@ -152,7 +152,9 @@
 
 ### Sun Stone & More Buildables (20 marks)
 
-[Links to your merge requests](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T3/students/z5592426/assignment-ii/-/merge_requests/11)
+[Links to your merge requests](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T3/students/z5592426/assignment-ii/-/merge_requests/11
+https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T3/students/z5592426/assignment-ii/-/merge_requests/12
+)
 
 **Assumptions**
 
@@ -163,6 +165,20 @@
 [Design]
     SunStone --> Made SunStone extend Treasure since its a special form of treasure
     Sceptre --> builable when implements Usable. Item is removed after durability (set num) is 0 bc then the game would be too OP - so durability = mind_control_duration. 
+
+    Sceptre:
+        - Make Sceptre.java
+        - Make sceptre factory
+        - add recipe and edit constructor and added recipe to game builder
+        - add functionality to mercenary
+        - changed it so scepture was immediately "used"/removed by the player
+
+    armour:
+        - make MidnightArmour.java
+        - make armour factory
+        - add receipe and edit constructor
+        - add recipe to game builder
+        - ensure buffs of armour are applied
 
 **Changes after review**
 
@@ -178,9 +194,16 @@
         - Make Sceptre.java
         - Make sceptre factory
         - add recipe and edit constructor and added recipe to game builder
-        - add functionality to mercenary
+        - add functionality to mercenary --> canBeBribed i had to play around with a bit becuase i originally had it make the mercenary become an ally no matter the condition but then as a safety check i moved it into each if statement in case sceptre was null. isInteractable i changed so that it also checked for a sceptre. I also changed the functionality of move() a lot to try determine the best way to implement it so that it matched the described tick behaviour in the spec. 
 
-        
+        - changed it so scepture was immediately "used"/removed by the player
+
+    armour:
+        - make MidnightArmour.java
+        - make armour factory
+        - add receipe and edit constructor. WHen doing this i had some issues trying to determine how to check if zombies currently existed in the game since recipe didnt take in the game. Since recipe was the determinent class for seeing if smoething could be crafted or not, i decided to add GameMap to the constructor of recipe. then i could add a function in recipe to check if zombies existed in the map --> explore if better design 
+        - add recipe to game builder
+        - ensure buffs of armour are applied
 
 **Test list**
 
@@ -195,6 +218,11 @@
     sceptre
     - craft a scepre and add to inventory
     - mindcontrol working completely - bro idek if its working
+
+    armour
+    - craft the armour given no zombies and add to inventory
+    - cannot craft armour if there are zombies and doesnt add to inventory
+    - armour adds buffs (Midnight armour provides extra attack damage as well as protection, and it lasts forever.) - cant test bc we cant access the methods that look at health
 
 **Other notes**
 
