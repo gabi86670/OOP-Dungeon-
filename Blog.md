@@ -147,7 +147,7 @@
 
     I then needed to make fixes in Game.java (change the initialisation to occur in MapInitialiser), in EntityFactory (gameMap no longer had a registerPotionListener method so i just registered it directly with the player instead)
 
-[Merge Request 8]()
+[Merge Request 8](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T3/students/z5592426/assignment-ii/-/merge_requests/16)
 [Briefly explain what you did]
     As I was completing the buildables task, I realised that my recipe.java was violating OCP because you always needed to modify the file to add a new type of craftable item, which is what hapened particularly when I added the midnight armour because i add to add fields into the constructor to take in the gameMap, which also was poor design because recipe should be accessing things like the gameMap because its not relevant to the functionality of recipes. 
 

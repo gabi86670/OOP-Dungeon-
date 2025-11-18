@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Timeout;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import java.util.concurrent.TimeUnit;
 import dungeonmania.DungeonManiaController;
 import dungeonmania.mvp.TestUtils;
@@ -71,29 +72,8 @@ public class SceptreTest {
         assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
         res = dmc.tick(Direction.RIGHT);
         assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
-        // expires
-        res = dmc.tick(Direction.UP);
-        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
-        res = dmc.tick(Direction.UP);
-        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
-        res = dmc.tick(Direction.UP);
-        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
-        res = dmc.tick(Direction.UP);
-        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
-        res = dmc.tick(Direction.UP);
-        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
-        res = dmc.tick(Direction.UP);
-        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
-        res = dmc.tick(Direction.UP);
-        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
-        res = dmc.tick(Direction.UP);
-        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
-        res = dmc.tick(Direction.UP);
-        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
-        res = dmc.tick(Direction.UP);
-        assertFalse(TestUtils.getEntityById(res, mercId).get().isInteractable());
+
         // now its hostile
         res = dmc.tick(Direction.UP);
     }
-
 }

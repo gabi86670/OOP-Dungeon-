@@ -82,19 +82,19 @@ public class Mercenary extends Enemy implements Interactable, PotionListener {
     public void interact(Player player, Game game) {
         Sceptre sceptre = player.getInventory().getFirst(Sceptre.class);
 
-        if (canBeBribed(player)) {
-            allied = true;
-            mindControlled = false;
-            this.movementStrategy = new AlliedMovement();
-            bribe(player);
-            return;
-        } else if (sceptre != null) {
+        if (sceptre != null) {
             allied = true;
             mindControlled = true;
             this.movementStrategy = new AlliedMovement();
             mindControlDuration = sceptre.getDurability();
             sceptre.use(game);
+        } else if (canBeBribed(player)) {
+            allied = true;
+            mindControlled = false;
+            this.movementStrategy = new AlliedMovement();
+            bribe(player);
         }
+
     }
 
     @Override

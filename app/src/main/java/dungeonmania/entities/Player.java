@@ -93,8 +93,11 @@ public class Player extends Entity implements Battleable, Overlap {
         Buildable craftNew = recipe.craft(entity, this);
         if (craftNew == null)
             return false;
-
-        return inventory.add((InventoryItem) craftNew);
+        if (craftNew instanceof InventoryItem) {
+            return inventory.add((InventoryItem) craftNew);
+        } else {
+            return true;
+        }
     }
 
     public void move(GameMap map, Direction direction) {
@@ -211,12 +214,8 @@ public class Player extends Entity implements Battleable, Overlap {
 
         // Apply inventory buffs and use items
         for (InventoryItem item : inventory.getEntities(InventoryItem.class)) {
-            if (item instanceof Useable useable && !(item instanceof Potion)) {
-                stats = item.applyBuff(stats);
-                useable.use(game);
-            }
+            stats = item.applyBuff(stats);
         }
-
         return stats;
     }
 
