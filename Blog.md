@@ -147,6 +147,12 @@
 
     I then needed to make fixes in Game.java (change the initialisation to occur in MapInitialiser), in EntityFactory (gameMap no longer had a registerPotionListener method so i just registered it directly with the player instead)
 
+[Merge Request 8]()
+[Briefly explain what you did]
+    As I was completing the buildables task, I realised that my recipe.java was violating OCP because you always needed to modify the file to add a new type of craftable item, which is what hapened particularly when I added the midnight armour because i add to add fields into the constructor to take in the gameMap, which also was poor design because recipe should be accessing things like the gameMap because its not relevant to the functionality of recipes. 
+
+    I changed the craftingFactory.java interface to incl a bool canCraft() method so now each factory was concerned with their requirements to craft their respective entity and removing the items from the player's inventory when crafting. Basically most of the logic in recipe was moved to its respective entity factories. Recipe still ensursed though that each recipe could be crafted before crafting.
+    I also added a helper class (craftingItems.java) to return the exact count of given inventory items and to handle the removal of items from the inventory, preventing law of demeter violations and SRP problems in recipe/each entity's factory. Recipe then became a simple ochestrator to help with decoupling and better preserve OCP. 
 
 ## Task 2) Evolution of Requirements 🔧
 
